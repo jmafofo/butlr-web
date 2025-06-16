@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 
 export default function Home() {
   const router = useRouter(); 
-  const Button = dynamic(() => import('@/app/components/ui/Button').then(mod => mod.Button), { ssr: false })
+  const Button = dynamic(() => import('./components/ui/Button').then(mod => mod.Button), { ssr: false })
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white">
