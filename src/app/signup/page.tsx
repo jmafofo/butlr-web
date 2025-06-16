@@ -3,18 +3,17 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-// import ButlrApp from '@/components/ButlrApp'
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
 
-  const handleSignIn = async () => {
-    setMessage('Signing in...')
+  const handleSignup = async () => {
+    setMessage('Creating account...')
 
-    const res = await fetch('/api/auth/signin', {
+    const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -24,14 +23,10 @@ export default function SignInPage() {
     if (data.error) {
       setMessage(data.error)
     } else {
-      setMessage('Signed in successfully!')
-      // Redirect if needed:
-      router.push('/dashboard')
+      setMessage('Signup successful! Please check your email.')
+      // Optionally redirect after signup:
+      // router.push('/signin')
     }
-  }
-
-  const handleRedirectToSignup = () => {
-    router.push('/signup') // or call signup inline if you prefer
   }
 
   return (
@@ -41,37 +36,28 @@ export default function SignInPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent"
+          className="text-5xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
         >
-          Welcome Back to Butlr
+          Create your Butlr account
         </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="text-lg text-slate-300 mt-4"
-        >
-          Sign in to continue
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 0.8 }}
           className="mt-10 space-y-4 max-w-md mx-auto"
         >
           <input
             className="w-full p-3 rounded bg-slate-800 text-white border border-slate-700"
             type="email"
-            placeholder="Email"
+            placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             className="w-full p-3 rounded bg-slate-800 text-white border border-slate-700"
             type="password"
-            placeholder="Password"
+            placeholder="Choose a password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -79,22 +65,23 @@ export default function SignInPage() {
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            onClick={handleSignIn}
-            className="w-full p-3 rounded bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold"
+            onClick={handleSignup}
+            className="w-full p-3 rounded bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold"
           >
-            Sign In
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleRedirectToSignup}
-            className="w-full p-3 rounded bg-slate-800 border border-slate-600 text-slate-300 hover:border-white"
-          >
-            Don’t have an account? Sign Up
+            Sign Up
           </motion.button>
 
           {message && <p className="text-sm text-slate-300 mt-2">{message}</p>}
+
+          <p className="text-sm text-slate-400 mt-4">
+            Already have an account?{' '}
+            <button
+              className="underline text-purple-400 hover:text-pink-400"
+              onClick={() => router.push('/signin')}
+            >
+              Sign In
+            </button>
+          </p>
         </motion.div>
       </div>
     </div>
