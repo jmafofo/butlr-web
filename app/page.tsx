@@ -35,7 +35,7 @@ export default function Home() {
         >
           <Button
             size="lg"
-            onClick={() => router.push('/app')}
+            onClick={() => router.push('/pages')}
             className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold text-lg px-8 py-4 rounded-full"
           >
             Start Free & Take the Quiz
