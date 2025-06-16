@@ -19,14 +19,14 @@ export default function Home() {
         >
           Butlr App coming soon
         </motion.h1>
-        {/* <motion.p
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
           className="text-lg text-slate-300 mt-4"
         >
-          Your AI content assistant. Titles, hashtags, thumbnails, and growth plans — powered by quiz-driven insights.
-        </motion.p> */}
+          We’re cooking up something powerful. Stay tuned!
+        </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
