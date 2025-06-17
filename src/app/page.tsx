@@ -1,38 +1,34 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
-// import ButlrApp from '@/components/ButlrApp'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
+import { motion } from "framer-motion";
 
 export default function SignInPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSignIn = async () => {
-    setMessage('Signing in...')
+    setMessage("Signing in...");
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    const res = await fetch('/api/auth/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-
-    const data = await res.json()
-    if (data.error) {
-      setMessage(data.error)
+    if (error) {
+      setMessage(error.message);
     } else {
-      setMessage('Signed in successfully!')
-      // Redirect if needed:
-      router.push('/dashboard')
+      setMessage("Signed in successfully!");
+      router.push("/insights");
     }
-  }
+  };
 
   const handleRedirectToSignup = () => {
-    router.push('/signup') // or call signup inline if you prefer
-  }
+    router.push("/signup");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white">
@@ -98,5 +94,5 @@ export default function SignInPage() {
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
