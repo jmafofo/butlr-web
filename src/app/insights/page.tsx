@@ -6,8 +6,10 @@ import { generateInsights } from "@/lib/openaiClient";
 import type { User } from "@supabase/supabase-js";
 import { InsightData, SavedSuggestion } from "@/types/insights";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function InsightsPage() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [tone, setTone] = useState("SEO‑Rich");
   const [res, setRes] = useState<InsightData>();
@@ -16,12 +18,10 @@ export default function InsightsPage() {
   const [loading, setLoading] = useState(true);
   const [loader, setLoader] = useState(false);
 
-  // Check if user is logged in on mount
   useEffect(() => {
+    console.log(supabase.auth.getSession());
     async function checkUser() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
       setLoading(false);
       if (session?.user) {
@@ -79,6 +79,10 @@ export default function InsightsPage() {
     setSaved(data || []);
   }
 
+  const handleRedirectToSignin = () => {
+    router.push("/signin");
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white">
@@ -89,14 +93,32 @@ export default function InsightsPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center text-white px-4">
-        <h2 className="text-2xl mb-4">Please log in to view this page.</h2>
-        <button
-          onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })} // example provider
-          className="px-6 py-3 bg-purple-600 rounded hover:bg-purple-700"
-        >
-          Log in with GitHub
-        </button>
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white">
+        <div className="max-w-5xl mx-auto px-6 pt-40 pb-12 text-center">
+          <motion.h5
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+          >
+            Please log in to view this page.
+          </motion.h5>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="mt-10 space-y-4 max-w-md mx-auto"
+          >
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleRedirectToSignin}
+                className="w-full p-3 rounded bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold"
+              >
+                Login using your account
+              </motion.button>
+            </motion.div>
+        </div>
       </div>
     );
   }
@@ -114,12 +136,17 @@ export default function InsightsPage() {
         </motion.h1>
       {loader ? (
             <div className="flex justify-center py-4 mt-5">
-            <img
-              src="/loading.gif"
-              alt="Loading animation"
+            <video
+              autoPlay
+              loop
+              muted
               className="w-84 h-84 object-contain overflow-hidden"
               style={{ backgroundColor: 'transparent' }}
-            />
+              >
+              <source src="/loading.webm" type="video/webm" />
+              {/* Optional fallback for browsers that don't support webm */}
+              Your browser does not support the video tag.
+            </video>
           </div>
           
           ) : (

@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gemma3:27b", // update as needed
+        model: "gemma3:27b",
         prompt: prompt,
         stream: false,
       }),

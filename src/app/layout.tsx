@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import TopBarWrapper from "@/components/TopBarWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,23 +17,19 @@ export const metadata: Metadata = {
   title: "Butlr Platform",
   description: "All in One - SEO Platform",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <TopBarWrapper />
         {children}
       </body>
     </html>
