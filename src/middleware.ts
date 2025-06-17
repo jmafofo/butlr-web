@@ -11,7 +11,9 @@ export function middleware(request: NextRequest) {
     url.pathname.startsWith('/_next') ||
     url.pathname.startsWith('/favicon') ||
     url.pathname.startsWith('/loading') ||
+    url.pathname.startsWith('/logo') ||
     url.pathname.startsWith('/api') ||
+    url.pathname.startsWith('/settings') ||
     url.pathname.startsWith('/signup') ||
     url.pathname.startsWith('/insights') ||
     url.pathname.startsWith('/public')

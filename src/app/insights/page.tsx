@@ -140,7 +140,7 @@ export default function InsightsPage() {
               autoPlay
               loop
               muted
-              className="w-84 h-84 object-contain overflow-hidden"
+              className="w-54 h-54 object-contain overflow-hidden"
               style={{ backgroundColor: 'transparent' }}
               >
               <source src="/loading.webm" type="video/webm" />

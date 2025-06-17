@@ -42,6 +42,16 @@ export default function TopBar() {
     };
   }, []);
 
+  const handleSettings = async () => {
+    router.push("/settings");
+    setDropdownOpen(false);
+  };
+
+  const handleInsights = async () => {
+    router.push("/insights");
+    setDropdownOpen(false);
+  };
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     setUser(null);
@@ -52,8 +62,7 @@ export default function TopBar() {
 
   return (
     <div className="w-full px-6 py-4 bg-slate-950 shadow-md flex justify-between items-center">
-      <h1 className="text-xl font-bold">Butlr AI</h1>
-
+      <img src="/logo_btlr.svg" alt="Butlr AI Logo" className="h-8 w-auto" />
       {user ? (
         <div className="relative" ref={dropdownRef}>
           <button
@@ -76,10 +85,15 @@ export default function TopBar() {
               <ul className="py-1 text-sm text-gray-800">
                 <li>
                   <button
-                    onClick={() => {
-                      router.push("/settings");
-                      setDropdownOpen(false);
-                    }}
+                    onClick={handleInsights}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  >
+                    Insights
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={handleSettings}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                   >
                     Settings
